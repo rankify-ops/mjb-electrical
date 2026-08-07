@@ -27,9 +27,11 @@ Font: Inter. Design language matches the Prime Group Build site.
 
 ## Before this goes live
 
-- [ ] **Quote form is not connected.** Paste MJB's Web3Forms access key into
-      `data-access-key` on `#quote-form` in `index.html`. Until then the form
-      shows a "call us" message rather than silently dropping leads.
+- [x] **Quote form is connected** via Web3Forms — the access key sits on
+      `data-access-key` on `#quote-form` in `index.html`. Web3Forms delivers to
+      the address that key is registered against. Add `data-to="…"` to override.
+      If the key is ever removed the form shows a "call us" message rather than
+      silently dropping leads.
 - [ ] **Reviews section is commented out** (see the block above `#areas`).
       The source site loads reviews from a third-party widget, so no real review
       text was available to carry across. Add real Google reviews or re-embed
