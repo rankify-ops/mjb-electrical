@@ -341,6 +341,90 @@ textarea.finp{resize:vertical;min-height:90px}
 .sticky .sq{background:var(--accent);color:#fff;box-shadow:var(--glow),var(--sheen)}
 .sticky .sq:active{background:var(--accent-dark)}
 
+/* ============================================================
+   SKEWED BUTTONS
+   The button itself stays unskewed so labels render upright and
+   stay selectable; a ::before pseudo carries the skewed slab,
+   the fill, the border and the glow.
+   ============================================================ */
+.btn-p,.btn-glass,.btn-dark,.btn-red,.nav-cta,.pcta,.fn,.fb,
+.mc-quote,.mc-call,.sticky .sc,.sticky .sq{
+  position:relative;z-index:0;background:transparent!important;border:none;
+  border-radius:0;box-shadow:none!important;overflow:visible;
+  text-transform:uppercase;letter-spacing:.055em;
+}
+.btn-p::before,.btn-glass::before,.btn-dark::before,.btn-red::before,
+.nav-cta::before,.pcta::before,.fn::before,.fb::before,
+.mc-quote::before,.mc-call::before,.sticky .sc::before,.sticky .sq::before{
+  content:'';position:absolute;inset:0;z-index:-1;border-radius:3px;
+  transform:skewX(var(--skew));
+  transition:background .25s,box-shadow .28s cubic-bezier(.16,1,.3,1),border-color .25s;
+}
+:root{--skew:-11deg}
+
+/* fills */
+.btn-p::before,.nav-cta::before,.fn::before,.mc-quote::before,.sticky .sq::before{
+  background:var(--accent);box-shadow:var(--glow-s),var(--sheen)}
+.btn-p:hover::before,.nav-cta:hover::before,.fn:hover::before,.sticky .sq:active::before{
+  background:var(--accent-dark);box-shadow:var(--glow-l),var(--ring),var(--sheen)}
+.btn-p:active::before,.nav-cta:active::before,.fn:active::before{
+  box-shadow:var(--glow-s),var(--sheen)}
+
+.btn-red::before{background:var(--red);box-shadow:0 4px 14px rgba(177,7,7,.36),var(--sheen)}
+.btn-red:hover::before{background:var(--red-dark);box-shadow:0 16px 44px rgba(177,7,7,.52),0 0 0 1px rgba(177,7,7,.5),var(--sheen)}
+
+.btn-dark::before,.pcta::before{background:var(--g900);box-shadow:0 4px 14px rgba(0,0,0,.22),var(--sheen)}
+.btn-dark:hover::before,.pcta:hover::before{background:var(--accent);box-shadow:var(--glow-l),var(--ring),var(--sheen)}
+
+.btn-glass::before,.mc-call::before{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.btn-glass:hover::before{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.35);
+  box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.28)}
+
+.fb::before{background:var(--white);border:1.5px solid var(--g200)}
+.fb:hover::before{background:var(--g50);border-color:var(--g300)}
+
+.sticky .sc::before{background:rgba(255,255,255,.9);border:1px solid rgba(226,101,15,.25)}
+
+/* lift on hover */
+.btn-p:hover,.btn-glass:hover,.btn-dark:hover,.btn-red:hover,.pcta:hover{transform:translateY(-2px)}
+.btn-p:active,.btn-glass:active,.btn-dark:active,.btn-red:active,.pcta:active{transform:translateY(0)}
+.nav-cta:hover{transform:translateY(-1px)}
+.nav-cta:active{transform:translateY(0)}
+
+/* the skewed slab needs a touch more side padding so text clears the slanted edges */
+.btn-p,.btn-glass,.btn-dark,.btn-red{padding:16px 34px;border-radius:0;font-weight:800;font-size:.88rem}
+.nav-cta{padding:10px 24px;font-weight:800;font-size:.79rem}
+.pcta{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;font-weight:800;font-size:.79rem}
+.fn,.fb{padding:13px 24px;font-weight:800;font-size:.82rem}
+.mc-quote,.mc-call{padding:15px 20px;font-weight:800;font-size:.86rem}
+.sticky .sc,.sticky .sq{padding:14px 18px}
+/* Each slab overhangs its box by height/2 * tan(skew) — roughly 5px a side.
+   Side-by-side buttons need that back on top of the gap or the slabs touch. */
+.sticky{border-radius:6px;gap:16px}
+.hero-btns,.cta-strip-btns{gap:22px}
+.fnav{gap:20px}
+
+/* arrow */
+.btn-arrow{width:17px;height:17px;flex-shrink:0;stroke:currentColor;fill:none;
+  stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .28s cubic-bezier(.16,1,.3,1);margin-left:2px}
+.btn-p:hover .btn-arrow,.btn-dark:hover .btn-arrow,.btn-red:hover .btn-arrow,
+.nav-cta:hover .btn-arrow,.pcta:hover .btn-arrow,.fn:hover .btn-arrow,
+.mc-quote:active .btn-arrow{transform:translateX(5px)}
+.nav-cta .btn-arrow,.pcta .btn-arrow,.fn .btn-arrow{width:15px;height:15px}
+
+@media(prefers-reduced-motion:reduce){
+  .btn-arrow{transition:none}
+  .btn-p:hover .btn-arrow,.btn-dark:hover .btn-arrow,.btn-red:hover .btn-arrow,
+  .nav-cta:hover .btn-arrow,.pcta:hover .btn-arrow,.fn:hover .btn-arrow{transform:none}
+}
+@media(max-width:600px){
+  :root{--skew:-9deg}
+  .btn-p,.btn-glass,.btn-dark,.btn-red{padding:15px 24px}
+}
+
 /* FADE */
 .fade{opacity:0;transform:translateY(18px);transition:all .55s cubic-bezier(.16,1,.3,1)}
 .fade.vis{opacity:1;transform:translateY(0)}
@@ -356,7 +440,7 @@ textarea.finp{resize:vertical;min-height:90px}
   .faq-img{position:static;aspect-ratio:16/9}
   .hero-inner{padding:120px 0 70px}
   .hero-content{max-width:none}
-  .hero-btns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .hero-btns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
   .hero-btns .btn-p,.hero-btns .btn-glass{padding:13px 10px;font-size:.82rem;justify-content:center}
   .hero-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;grid-auto-rows:1fr}
   .hero-glass{flex:none}
@@ -427,9 +511,10 @@ textarea.finp{resize:vertical;min-height:90px}
 }
 @media(max-width:560px){
   /* Long CTA labels can't share a row at this width without clipping — stack them */
-  .hero-btns{grid-template-columns:1fr}
+  /* stacked — no horizontal lean to clear, so pull the gap back in */
+  .hero-btns{grid-template-columns:1fr;gap:12px}
   .hero-btns .btn-p,.hero-btns .btn-glass{font-size:.88rem;padding:14px 16px}
-  .cta-strip-btns{display:grid;grid-template-columns:1fr;width:100%}
+  .cta-strip-btns{display:grid;grid-template-columns:1fr;width:100%;gap:12px}
   .cta-strip-btns .btn-p,.cta-strip-btns .btn-glass{justify-content:center}
 }
 @media(max-width:480px){
