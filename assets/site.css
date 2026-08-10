@@ -352,6 +352,9 @@ textarea.finp{resize:vertical;min-height:90px}
   position:relative;z-index:0;background:transparent!important;border:none;
   border-radius:0;box-shadow:none!important;overflow:visible;
   text-transform:uppercase;letter-spacing:.055em;
+  /* The blur has to move to the slab too — left on the element it frosts the
+     element's own square box, showing a rectangle behind the skewed slab. */
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
 }
 .btn-p::before,.btn-glass::before,.btn-dark::before,.btn-red::before,
 .nav-cta::before,.pcta::before,.fn::before,.fb::before,
